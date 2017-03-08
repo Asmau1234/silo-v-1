@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{title}}</title>
+</head>
+<body>
+
+<div class="row">
+
+    <button class="btn btn-default btn-lg" ng-click="makeReport()">Make A Report </button>
+    <button class="btn btn-default btn-lg" ng-click="viewReports()">View Reports </button>
+
+</div>
+<span></span>
+
+
+<div class="row" ng-show="makereportClasses">
+
+    <button class="btn btn-default btn-md" ng-click="showPersonreport()">Make A Person Report</button>
+    <button class="btn btn-default btn-md" ng-click="showVehiclereport()">Make A Vehicle Report</button>
+    <button class="btn btn-default btn-md" ng-click="showIncidentreport()">Make An Incident Report</button>
+
+</div>
+
+<div class="row" ng-show="viewreportClasses">
+
+    <button class="btn btn-default btn-sm" ng-click="viewPersonreports()">View Person Reports</button>
+    <button class="btn btn-default btn-sm" ng-click="viewVehiclereports()">View Vehicle Reports</button>
+    <button class="btn btn-default btn-sm" ng-click="viewIncidentreports()">View Incident Reports</button>
+
+</div>
+
+
+<div class="form-group" ng-show="personReport">
+
+    <table class="table table-spacing">
+        <tr>
+            <td>
+                Name Of Suspect
+            </td>
+            <td>
+                <input class="form-control" ng-model="personreport.suspectProfile.nameOfSuspect" class= "text" >
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Gender Of Suspect
+            </td>
+            <td>
+                <select class="form-control" data-width="100%" ng-model="personreport.suspectProfile.genderOfSuspect"
+                        ng-options="gender.name as gender.name for gender in gender "
+                        placeholder="---">
+
+                    <option value=""> --</option>
+
+                </select>                </td>
+        </tr>
+        <tr>
+            <td>
+                Address Of Suspect
+            </td>
+            <td>
+                <input class="form-control" ng-model="personreport.suspectProfile.contactAddress" class= "text" >
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Phone Number Of Suspect
+            </td>
+            <td>
+                <input class="form-control" ng-model="personreport.suspectProfile.contactPhone" class= "text" >
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Estimated Height Of Suspect
+            </td>
+            <td>
+                <input class="form-control" ng-model="personreport.suspectProfile.height" class= "text" >
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Estimated Weight Of Suspect
+            </td>
+            <td>
+                <input class="form-control" ng-model="personreport.suspectProfile.weight" class= "text" >
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Skin Color Of Suspect
+            </td>
+            <td>
+                <select class="form-control" data-width="100%" ng-model="personreport.suspectProfile.skinColor"
+                        ng-options="skincolor.name as skincolor.name for skincolor in skincolors "
+                        placeholder="---">
+
+                    <option value=""> --</option>
+
+                </select>              </td>
+        </tr>
+        <tr>
+            <td>
+                Race Of Suspect
+            </td>
+            <td>
+                <select class="form-control" data-width="100%" ng-model="personreport.suspectProfile.race"
+                        ng-options="race.name as race.name for race in races "
+                        placeholder="---">
+
+                    <option value=""> --</option>
+
+                </select>              </td>
+        </tr>
+        <tr>
+            <td>
+                Nationality Of Suspect
+            </td>
+            <td>
+                <input class="form-control" ng-model="personreport.suspectProfile.nationality" class= "text" >
+            </td>
+        </tr>
+        <tr>
+
+        <tr>
+            <td>
+                Religion Of Suspect
+            </td>
+            <td>
+                <select class="form-control" data-width="100%" ng-model="personreport.suspectProfile.religion"
+                        ng-options="religion.name as religion.name for religion in religions "
+                        placeholder="---">
+
+                    <option value=""> --</option>
+
+                </select>             </td>
+        </tr>
+
+        <tr>
+            <td>
+                Tribe Of Suspect
+            </td>
+            <td>
+                <select class="form-control" data-width="100%" ng-model="personreport.suspectProfile.tribe"
+                        ng-options="tribe.name as tribe.name for tribe in tribes "
+                        placeholder="---">
+
+                    <option value=""> --</option>
+
+                </select>             </td>
+        </tr>
+        <tr>
+            <td>
+                Does Suspect Have Tribal Marks?
+            </td>
+            <td>
+                <select class="form-control" data-width="100%" ng-model="personreport.suspectProfile.tribalMark"
+                        ng-options="tribalmark.name as tribalmark.name for tribalmark in booleans "
+                        placeholder="---">
+
+                    <option value=""> --</option>
+
+                </select>             </td>
+        </tr>
+        <tr>
+            <td class="required" style="width:180px">
+                Does The Suspect Use Glasses
+            </td>
+            <td>
+                <select class="form-control" data-width="100%" ng-model="personreport.suspectProfile.glasses"
+                        ng-options="glasses.name as glasses.name for glasses in booleans "
+                        placeholder="---">
+
+                    <option value=""> --</option>
+
+                </select>            </td>
+        </tr>
+        <tr>
+            <td class="required" style="width:180px">
+                Does The Suspect Have Facial Hair?
+            </td>
+            <td>
+                <select class="form-control" data-width="100%" ng-model="personreport.suspectProfile.facialHair"
+                        ng-options="facialhair.name as facialhair.name for facialhair in booleans "
+                        placeholder="---">
+
+                    <option value=""> --</option>
+
+                </select>            </td>
+        </tr>
+        <tr>
+            <td class="required">
+                Does The Suspect Have Head Hair?
+            </td>
+            <td>
+                <select class="form-control" data-width="100%" ng-model="personreport.suspectProfile.headHair "
+                        ng-options="hair.name as hair.name for hair in booleans "
+                        placeholder="---">
+
+                    <option value=""> --</option>
+
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Hair Type Of Suspect
+            </td>
+            <td>
+                <select class="form-control" data-width="100%" ng-model="personreport.suspectProfile.hairType "
+                        ng-options="hairtype.name as hairtype.name for hairtype in hairtypes "
+                        placeholder="---">
+
+                    <option value=""> --</option>
+
+                </select>            </td>
+        </tr>
+        <tr>
+            <td>
+                Hair Color Of Suspect
+            </td>
+            <td>
+                <input class="form-control" ng-model="personreport.suspectProfile.hairColor" class= "color" type="color">
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Eye Color Of Suspect
+            </td>
+            <td>
+                <input class="form-control" ng-model="personreport.suspectProfile.eyeColor" class= "color" type="color">
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+               Does The Suspect Have Tattoos?
+            </td>
+            <td>
+                <select class="form-control" data-width="100%" ng-model="personreport.suspectProfile.tattoo "
+                        ng-options="tattoo.name as tattoo.name for tattoo in booleans "
+                        placeholder="---">
+
+                    <option value=""> --</option>
+
+                </select>            </td>
+        </tr>
+        <tr>
+            <td>
+                Tattoo Image or Text Description
+            </td>
+            <td>
+                <input class="form-control" ng-model="personreport.suspectProfile.tattooImage" class= "text" >
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Last Place Suspect Seen
+            </td>
+            <td>
+                <input class="form-control" ng-model="personreport.lastplaceSeen" class= "text" >
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Age Of Victim
+            </td>
+            <td>
+                <input class="form-control" ng-model="personreport.ageOfvictim" class= "text" >
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Gender Of Victim
+            </td>
+            <td>
+                <select class="form-control" data-width="100%" ng-model="personreport.genderOfvictim "
+                        ng-options="genderofvictim.name as genderofvictim.name for genderofvictim in gender "
+                        placeholder="---">
+
+                    <option value=""> --</option>
+
+                </select>            </td>
+        </tr>
+        <tr>
+            <td>
+                What Made You Suspicious
+            </td>
+            <td>
+                <input class="form-control" ng-model="personreport.suspicionText" class= "text" >
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+                <button class="btn btn-default btn-md" ng-click="submitPersonreport()">Submit </button>
+            </td>
+        </tr>
+
+    </table>
+
+
+
+    </div>
+
+<div class="form-group" ng-show="vehicleReport">
+
+    <table class="table table-spacing">
+        <tr>
+            <td class="required" style="width:180px">
+                Vehicle Type
+            </td>
+            <td>
+                <select class="form-control" data-width="100%" ng-model="vehiclereport.vehicleType "
+                        ng-options="vehicle.name as vehicle.name for vehicle in vehicles "
+                        ng-change="getMakes(vehiclereport.vehicleType)"
+                        placeholder="---">
+
+                    <option value=""> --</option>
+
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td class="required" style="width:180px">
+                Vehicle Make
+            </td>
+            <td>
+                <select class="form-control" data-width="100%" ng-model="vehiclereport.vehicleMake "
+                        ng-options="make.name as make.name for make in vehicleMakes "
+                        placeholder="---">
+
+                    <option value=""> --</option>
+
+                </select>            </td>
+        </tr>
+        <tr>
+            <td class="required">
+                Vehicle Color
+            </td>
+            <td>
+                <input class="form-control" type="color" ng-model="vehiclereport.vehilceColor">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Plate Number
+            </td>
+            <td>
+                <input class="form-control" ng-model="vehiclereport.plateNumber" type= "text" >
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Last Seen Location
+            </td>
+            <td>
+                <input class="form-control" ng-model="vehiclereport.lastlocationSeen" type= "text" >
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Was The Vehicle Empty at Last Seen Location?
+            </td>
+            <td>
+                <select class="form-control" data-width="100%" ng-model="vehiclereport.emptyVehicle "
+                        ng-options="emptyvehicle.name as emptyvehicle.name for emptyvehicle in booleans "
+                        placeholder="---">
+
+                    <option value=""> --</option>
+
+                </select>             </td>
+        </tr>
+        <tr>
+            <td>
+                Number Of People In Vehicle
+            </td>
+            <td>
+                <select class="form-control" data-width="100%" ng-model="vehiclereport.noofPeopleinvehicle "
+                        ng-options="noofpeopleinvehicle.name as noofpeopleinvehicle.name for noofpeopleinvehicle in numberRange "
+                        placeholder="---">
+
+                    <option value=""> --</option>
+
+                </select>             </td>
+        </tr>
+        <tr>
+            <td>
+                Name Of Owner Of Vehicle
+            </td>
+            <td>
+                <input class="form-control" ng-model="vehiclereport.nameofOwner" type= "text" >
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                Age Of Victim
+            </td>
+            <td>
+                <input class="form-control" type="text" ng-model="vehiclereport.ageofVictim">
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                Gender Of Victim
+            </td>
+            <td>
+                <select class="form-control" data-width="100%" ng-model="vehiclereport.genderofVictim "
+                        ng-options="genderofvictim.name as genderofvictim.name for genderofvictim in gender "
+                        placeholder="---">
+
+                    <option value=""> --</option>
+
+                </select>            </td>
+        </tr>
+        <tr>
+            <td>
+                What Made You Suspicious?
+            </td>
+            <td>
+                <input class="form-control" ng-model="vehiclereport.suspicionText" type= "text" >
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Special Features
+            </td>
+            <td>
+                <input class="form-control" ng-model="vehiclereport.specialFeature" type= "text" >
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+                <button class="btn btn-default btn-md" ng-click="submitVehiclereport()">Submit </button>
+            </td>
+        </tr>
+
+    </table>
+    </div>
+
+<div class="form-group" ng-show="incidentReport">
+    <table class="table table-spacing">
+        <tr>
+            <td>
+               Date Of Incident
+            </td>
+            <td>
+                <input  class="form-control" type="date" ng-model="incidentreport.dateOfIncident">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Time Of Incident
+            </td>
+            <td>
+                <input class="form-control" type="time" ng-model="incidentreport.timeOfIncident">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Location Of Incident
+            </td>
+            <td>
+                <input class="form-control" type="text" ng-model="incidentreport.locationofIncident">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Possible Address Of Incident
+            </td>
+            <td>
+                <input class="form-control" type="text" ng-model="incidentreport.addressofIncident">
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                Name Of Suspect Involved in Incident
+            </td>
+            <td>
+                <input class="form-control" type="text" ng-model="incidentreport.nameOfSuspect">
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                Type Of Incident
+            </td>
+            <td>
+                <select class="form-control" data-width="100%" ng-model="incidentreport.typeOfIncident"
+                        ng-options="typeofincident.name as typeofincident.name for typeofincident in IncidentTypes "
+                        placeholder="---">
+
+                    <option value=""> --</option>
+
+                </select>             </td>
+        </tr>
+
+        <tr>
+            <td>
+                Number Of People Involved in Incident
+            </td>
+            <td>
+                <select class="form-control" data-width="100%" ng-model="incidentreport.noofPeopleInvolved"
+                        ng-options="noofpeopleinvolved.name as noofpeopleinvolved.name for noofpeopleinvolved in numberRange "
+                        placeholder="---">
+
+                    <option value=""> --</option>
+
+                </select>             </td>
+        </tr>
+
+        <tr>
+            <td>
+                Age Of Victim
+            </td>
+            <td>
+                <input class="form-control" type="text" ng-model="incidentreport.ageofVictim">
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                Gender Of Victim
+            </td>
+            <td>
+                <select class="form-control" data-width="100%" ng-model="incidentreport.genderofVictim"
+                        ng-options="gender.name as gender.name for gender in gender "
+                        placeholder="---">
+
+                    <option value=""> --</option>
+
+                </select>             </td>
+        </tr>
+        <tr>
+            <td>
+                What Made You Suspicious?
+            </td>
+            <td>
+                <input class="form-control" type="text" ng-model="incidentreport.suspicionText">
+            </td>
+        </tr>
+        <tr>
+            <td>
+            </td>
+            <td>
+                <button class="btn btn-default btn-md" ng-click="submitIncidentreport()">Submit </button>
+            </td>
+        </tr>
+
+        </table>
+    </div>
+
+<div class="form-group" ng-show="personreportTable">
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>S/N</th>
+            <th>Type Of Report</th>
+            <th>Name Of Suspect</th>
+            <th>Gender </th>
+            <th>Possible Contact</th>
+            <th>Estimated Height Of Suspect</th>
+            <th>Estimated Weight Of Suspect</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="personreport in personreports" class='clickable-row' ng-click="showPReport(personreport)">
+            <td>{{$index + 1}}</td>
+            <td>{{personreport.typeOfReport}}</td>
+            <td>{{personreport.suspectProfile.nameOfSuspect}}</td>
+            <td>{{personreport.suspectProfile.genderOfSuspect}}</td>
+            <td>{{personreport.suspectProfile.contactAddress}}</td>
+            <td>{{personreport.suspectProfile.height}}</td>
+            <td>{{personreport.suspectProfile.weight}}</td>
+
+        </tr>
+        </tbody>
+        </table>
+    </div>
+
+<div class="form-group" ng-show="vehiclereportTable">
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>S/N</th>
+            <th>Type Of Report</th>
+            <th>Vehicle Type</th>
+            <th>Vehicle Make</th>
+            <th>Vehicle Color</th>
+            <th>Plate Number</th>
+            <th>Special Features</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="vehiclereport in vehiclereports" class='clickable-row' ng-click="showVReport(vehiclereport)">
+            <td>{{$index + 1}}</td>
+            <td>{{vehiclereport.typeOfReport}}</td>
+            <td>{{vehiclereport.vehicleType}}</td>
+            <td>{{vehiclereport.vehicleMake}}</td>
+            <td>{{vehiclereport.vehicleColor}}</td>
+            <td>{{vehiclereport.plateNumber}}</td>
+            <td>{{vehiclereport.specialFeature}}</td>
+        </tr>
+        </tbody>
+        </table>
+    </div>
+
+<div class="form-group" ng-show="incidentreportTable">
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>S/N</th>
+            <th>Type Of Report</th>
+            <th>Date Of Incident</th>
+            <th>Time Of Incident</th>
+            <th>Location Of Incident</th>
+            <th>Type Of Incident</th>
+            <th>What Made You Suspicious</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="incidentreport in incidentreports" class='clickable-row' ng-click="showIReport(incidentreport)">
+            <td>{{$index + 1}}</td>
+            <td>{{incidentreport.typeOfReport}}</td>
+            <td>{{incidentreport.dateOfIncident}}</td>
+            <td>{{incidentreport.timeOfIncident}}</td>
+            <td>{{incidentreport.locationofIncident}}</td>
+            <td>{{incidentreport.typeOfIncident}}</td>
+            <td>{{incidentreport.suspicionText}}</td>
+        </tr>
+        </tbody>
+        </table>
+    </div>
+
+<div class="table-responsive" ng-show="person">
+<span></span>
+    <h3>{{fullPReport.typeOfReport}}</h3>
+<span></span>
+
+    <table class="table table-spacing">
+        <tr>
+            <td>
+                Name Of Suspect
+            </td>
+            <td>
+                {{fullPReport.suspectProfile.nameOfSuspect}}
+            </td>
+            <td>
+                Gender Of Suspect
+            </td>
+            <td>
+                {{fullPReport.suspectProfile.genderOfSuspect}}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Contact Phone Of Suspect
+            </td>
+            <td>
+                {{fullPReport.suspectProfile.contactPhone}}
+            </td>
+            <td>
+                Contact Address Of Suspect
+            </td>
+            <td>
+                {{fullPReport.suspectProfile.contactAddress}}
+            </td>
+        </tr>
+        <tr>
+        <td>
+            Height Of Suspect
+        </td>
+        <td>
+            {{fullPReport.suspectProfile.height}}
+        </td>
+            <td>
+                Weight Of Suspect
+            </td>
+            <td>
+                {{fullPReport.suspectProfile.weight}}
+            </td>
+    </tr>
+        <tr>
+        <td>
+            Skin Color Of Suspect
+        </td>
+        <td>
+            {{fullPReport.suspectProfile.skinColor}}
+        </td>
+            <td>
+                Nationality Of Suspect
+            </td>
+            <td>
+                {{fullPReport.suspectProfile.nationality}}
+            </td>
+    </tr><tr>
+        <td>
+            Religion Of Suspect
+        </td>
+        <td>
+            {{fullPReport.suspectProfile.religion}}
+        </td>
+        <td>
+            Tribe Of Suspect
+        </td>
+        <td>
+            {{fullPReport.suspectProfile.tribe}}
+        </td>
+    </tr>
+        <tr>
+        <td>
+            Does Suspect Have Tribal Marks?
+        </td>
+        <td>
+            {{fullPReport.suspectProfile.tribalMarks}}
+        </td>
+            <td>
+                Does Suspect Wear Glasses?
+            </td>
+            <td>
+                {{fullPReport.suspectProfile.glasses}}
+            </td>
+    </tr>
+        <tr>
+        <td>
+            Does Suspect Have Facial Hair?
+        </td>
+        <td>
+            {{fullPReport.suspectProfile.facialHair}}
+        </td>
+            <td>
+                Does Suspect Have Head Hair?
+            </td>
+            <td>
+                {{fullPReport.suspectProfile.headHair}}
+            </td>
+    </tr><tr>
+        <td>
+          What Is The Suspects Hair Type?
+        </td>
+        <td>
+            {{fullPReport.suspectProfile.hairType}}
+        </td>
+        <td>
+            What Is The Suspects Hair Color?
+        </td>
+        <td>
+            {{fullPReport.suspectProfile.hairColor}}
+        </td>
+    </tr><tr>
+        <td>
+            What Is The Suspects Eye Color?
+        </td>
+        <td>
+            {{fullPReport.suspectProfile.eyeColor}}
+        </td>
+        <td>
+            Does The Suspect Have Tattoo?
+        </td>
+        <td>
+            {{fullPReport.suspectProfile.tattoo}}
+        </td>
+    </tr><tr>
+        <td>
+            What Is The Tattoo Image or Text?
+        </td>
+        <td>
+            {{fullPReport.suspectProfile.tattooImage}}
+        </td>
+        <td>
+            Last Place Seen
+        </td>
+        <td>
+            {{fullPReport.lastplaceSeen}}
+        </td>
+    </tr>
+        <tr>
+            <td>
+                Age Of Victim
+            </td>
+            <td>
+                {{fullPReport.ageOfvictim}}
+            </td>
+            <td>
+                Gender Of Victim
+            </td>
+            <td>
+                {{fullPReport.genderOfvictim}}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                What Made The User Suspicious
+            </td>
+            <td>
+                {{fullPReport.suspicionText}}
+            </td>
+            <td>
+                Last Place Suspect Was Seen
+            </td>
+            <td>
+                {{fullPReport.lastplaceSeen}}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Date Reported
+            </td>
+            <td>
+                {{fullPReport.dateReported}}
+            </td>
+        </tr>
+
+    </table>
+</div>
+
+<div class="table-reponsive" ng-show="vehicle">
+    <span></span>
+    <h3>{{fullVReport.typeOfReport}}</h3>
+    <span></span>
+    <table class="table table-spacing">
+        <tr>
+            <td>
+                Vehicle Type
+            </td>
+            <td>
+                {{fullVReport.vehicleType}}
+            </td>
+            <td>
+                Vehicle Make
+            </td>
+            <td>
+                {{fullVReport.vehicleMake}}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Vehicle Color
+            </td>
+            <td>
+                {{fullVReport.vehicleColor}}
+            </td>
+            <td>
+                Plate Number
+            </td>
+            <td>
+                {{fullVReport.plateNumber}}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Last Location Seen
+            </td>
+            <td>
+                {{fullVReport.lastlocationSeen}}
+            </td>
+            <td>
+                Was The Vehicle Empty?
+            </td>
+            <td>
+                {{fullVReport.emptyVehicle}}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                No Of People In Te Car
+            </td>
+            <td>
+                {{fullVReport.noofPeopleinvehicle}}
+            </td>
+            <td>
+                Name Of The Owner Of Vehicle
+            </td>
+            <td>
+                {{fullVReport.nameofOwner}}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Age Of Victim
+            </td>
+            <td>
+                {{fullVReport.ageofVictim}}
+            </td>
+            <td>
+                Gender Of Victim
+            </td>
+            <td>
+                {{fullVReport.genderofVictim}}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Special Feature On Vehicle
+            </td>
+            <td>
+                {{fullVReport.specialFeature}}
+            </td>
+            <td>
+                What Made The User Suspicious
+            </td>
+            <td>
+                {{fullVReport.suspicionText}}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Date Reported
+            </td>
+            <td>
+                {{fullVReport.dateReported}}
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div class="table-responsive" ng-show="incident">
+    <span></span>
+    <h3>{{fullVReport.typeOfReport}}</h3>
+    <span></span>
+    <table class="table table-spacing">
+        <tr>
+            <td>
+                Type Of Incident
+            </td>
+            <td>
+                {{fullIReport.typeOfIncident}}
+            </td>
+            <td>
+                Date Of Incident
+            </td>
+            <td>
+                {{fullIReport.dateOfIncident}}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Time Of Incident
+            </td>
+            <td>
+                {{fullIReport.timeOfIncident}}
+            </td>
+            <td>
+                Location Of Incident
+            </td>
+            <td>
+                {{fullIReport.locationofIncident}}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Address Of Incident
+            </td>
+            <td>
+                {{fullIReport.addressofIncident}}
+            </td>
+            <td>
+                Name Of Ssupect Involved In Incident
+            </td>
+            <td>
+                {{fullIReport.nameOfSuspect}}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Number Of People Involved
+            </td>
+            <td>
+                {{fullIReport.noofPeopleInvolved}}
+            </td>
+            <td>
+                Location Of Incident
+            </td>
+            <td>
+                {{fullIReport.locationofIncident}}
+            </td>
+
+        </tr>
+        <tr>
+            <td>
+                Age Of Victim
+            </td>
+            <td>
+                {{fullIReport.ageofVictim}}
+            </td>
+            <td>
+                Gender Of Victim
+            </td>
+            <td>
+                {{fullIReport.genderofVictim}}
+            </td>
+
+        </tr>
+        <tr>
+            <td>
+                What Made The User Suspicious
+            </td>
+            <td>
+                {{fullIReport.suspicionText}}
+            </td>
+            <td>
+                Date Reported
+            </td>
+            <td>
+                {{fullIReport.dateReported}}
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div class="form-group" ng-show="ocadDash">
+
+    <p>Welcome to the OCAD. Here, you can make reports of child abuse instances or</p>
+    </div>
+
+
+</body>
+</html>

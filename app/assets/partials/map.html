@@ -1,0 +1,156 @@
+<link rel="stylesheet" href="assets/stylesheets/layout.css">
+
+<div class="row">
+
+    <button class="btn btn-default btn-lg" ng-click="addConflict()">Add A Report To Map Conflict</button>
+    <button class="btn btn-default btn-lg" ng-click="viewConflicts()">Search For Conflicts On Map</button>
+    </div>
+
+<div class="form-group">
+    <div class="form-group" ng-show="makeConflictreport">
+        <table class="table-spacing">
+            <tr>
+                <td>
+                    Use Current Location?
+                </td>
+                <td>
+                    <select class="form-control" data-width="100%" ng-model="conflictreport.currentLocation"
+                    ng-options="currentlocation.name as currentlocation.name for currentlocation in booleans"
+                    ng-change="getLocationtable(conflictreport.currentLocation)">
+
+                        <option value=""> --</option>
+
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    State Location Of Crisis
+                </td>
+                <td>
+                    <select class="form-control" data-width="100%" ng-model="conflictreport.stateOfCrisis "
+                            ng-disabled="stateCrisis"
+                            ng-options="state.name as state.name for state in states"
+                            ng-change="getLga(conflictreport.stateOfCrisis)"
+                            placeholder="---">
+
+                        <option value=""> --</option>
+                        </select>
+                </td>
+            </tr>
+            <tr>
+               <td>
+                   LGA Location Of Crisis
+                </td>
+                <td>
+                    <select class="form-control" data-width="100%" ng-model="conflictreport.lgaOfCrisis "
+                            ng-disabled="lgaCrisis"
+                            ng-options="lga.name as lga.name for lga in lgas"
+                            placeholder="---">
+
+                        <option value=""> --</option>
+
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Level Of Crisis
+                </td>
+                <td>
+                    <select class="form-control" data-width="100%" ng-model="conflictreport.levelOfCrisis "
+                            ng-options=" severity.name as severity.name for severity in severitys"
+                            placeholder="---"
+                            ng-change="">
+
+                        <option value=""> --</option>
+                        </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                </td>
+                <td>
+                    <button class="btn btn-default btn-md" ng-click="reportConflict(conflictreport)">Report Crisis</button>
+                </td>
+            </tr>
+            </table>
+
+        </div>
+
+    <div class="form-group" ng-show="viewConflictMap">
+
+        {{text}}
+        <span></span>
+
+        <table class="table-spacing">
+            <tr>
+                <td class="required" style="width:180px">
+                    State
+                </td>
+                <td>
+                    <select class="form-control" data-width="100%" ng-model="search.state "
+                            ng-options="state.name as state.name for state in states"
+                            ng-change="getLga(search.state)"
+                            placeholder="---">
+
+                        <option value=""> --</option>
+
+                    </select>            </td>
+            </tr>
+            <tr>
+                <td class="required" style="width:180px">
+                    LGA
+                </td>
+                <td>
+                    <select class="form-control" data-width="100%" ng-model="search.lga "
+                            ng-options="lga.name as lga.name for lga in lgas"
+                            placeholder="---">
+
+                        <option value=""> --</option>
+
+                    </select>            </td>
+            </tr>
+            <tr>
+                <td class="required">
+                    Crisis Level
+                </td>
+                <td>
+                    <select class="form-control" data-width="100%" ng-model="search.severity "
+                            ng-options=" severity.name as severity.name for severity in severitys"
+                            placeholder="---"
+                            ng-change="">
+
+                        <option value=""> --</option>
+
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <button class="btn btn-default btn-md" ng-click="search(search)">Search </button>
+                </td>
+            </tr>
+
+        </table>
+    </div>
+
+</div>
+
+
+<div class="form-group">
+    <div ng-model="map_canvas" id="map_canvas" ng-controller="MapController">
+        <ui-gmap-google-map center="map.center" zoom="map.zoom" draggable="true" options="options">
+            <ui-gmap-markers models="markers"
+                             coords="'coords'"
+                             options="'options'"
+                             events="'events'"
+                             idkey="'_id'">
+                <ui-gmap-windows>
+                    <div ng-non-bindable>{{location}}</div>
+                </ui-gmap-windows>
+            </ui-gmap-markers>
+        </ui-gmap-google-map>
+        </div>
+</div>
