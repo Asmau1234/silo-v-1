@@ -346,6 +346,41 @@
             </td>
         </tr>
         <tr>
+            <td class="required">
+                Number Of Doors On Vehicle
+            </td>
+            <td>
+                <select class="form-control" data-width="100%" ng-model="vehiclereport.doorNumber "
+                        ng-options="range.name as range.name for range in numberRange "
+                        placeholder="---">
+
+                    <option value=""> --</option>
+
+                </select>            </td>
+        </tr>
+        <tr>
+            <td class="required">
+                Type Of Seats
+            </td>
+            <td>
+                <select class="form-control" data-width="100%" ng-model="vehiclereport.typeofSeats "
+                        ng-options="seat.name as seat.name for seat in seatTypes "
+                        placeholder="---">
+
+                    <option value=""> --</option>
+
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td class="required">
+                Color Of Seats
+            </td>
+            <td>
+                <input class="form-control" type="color" ng-model="vehiclereport.colorofSeats">
+            </td>
+        </tr>
+        <tr>
             <td>
                 Plate Number
             </td>
@@ -395,7 +430,27 @@
                 <input class="form-control" ng-model="vehiclereport.nameofOwner" type= "text" >
             </td>
         </tr>
+        <tr>
+        <td>
+            Gender Of Owner Of Vehicle
+        </td>
+        <td>
+            <select class="form-control" data-width="100%" ng-model="vehiclereport.genderofOwner "
+                    ng-options="gender.name as gender.name for gender in gender "
+                    placeholder="---">
 
+                <option value=""> --</option>
+
+            </select>        </td>
+    </tr>
+        <tr>
+            <td>
+                Address Of Owner Of Vehicle
+            </td>
+            <td>
+                <input class="form-control" ng-model="vehiclereport.addressofOwner" type= "text" >
+            </td>
+        </tr>
         <tr>
             <td>
                 Age Of Victim
@@ -486,6 +541,19 @@
             <td>
                 <input class="form-control" type="text" ng-model="incidentreport.nameOfSuspect">
             </td>
+        </tr>
+        <tr>
+            <td>
+                Gender Of Suspect Involved in Incident
+            </td>
+            <td>
+                <select class="form-control" data-width="100%" ng-model="incidentreport.genderOfSuspect "
+                        ng-options="gender.name as gender.name for gender in gender "
+                        placeholder="---">
+
+                    <option value=""> --</option>
+
+                </select>             </td>
         </tr>
 
         <tr>
@@ -629,8 +697,8 @@
         <tr ng-repeat="incidentreport in incidentreports" class='clickable-row' ng-click="showIReport(incidentreport)">
             <td>{{$index + 1}}</td>
             <td>{{incidentreport.typeOfReport}}</td>
-            <td>{{incidentreport.dateOfIncident}}</td>
-            <td>{{incidentreport.timeOfIncident}}</td>
+            <td>{{incidentreport.dateOfIncident| date}}</td>
+            <td>{{incidentreport.timeOfIncident|date:' h:mm'}}</td>
             <td>{{incidentreport.locationofIncident}}</td>
             <td>{{incidentreport.typeOfIncident}}</td>
             <td>{{incidentreport.suspicionText}}</td>
@@ -814,7 +882,7 @@
                 Date Reported
             </td>
             <td>
-                {{fullPReport.dateReported}}
+                {{fullPReport.dateReported|date}}
             </td>
         </tr>
 
@@ -915,7 +983,7 @@
                 Date Reported
             </td>
             <td>
-                {{fullVReport.dateReported}}
+                {{fullVReport.dateReported | date}}
             </td>
         </tr>
     </table>
@@ -937,7 +1005,7 @@
                 Date Of Incident
             </td>
             <td>
-                {{fullIReport.dateOfIncident}}
+                {{fullIReport.dateOfIncident| date}}
             </td>
         </tr>
         <tr>
@@ -945,7 +1013,7 @@
                 Time Of Incident
             </td>
             <td>
-                {{fullIReport.timeOfIncident}}
+                {{fullIReport.timeOfIncident|date:' h:mm'}}
             </td>
             <td>
                 Location Of Incident
@@ -1009,7 +1077,7 @@
                 Date Reported
             </td>
             <td>
-                {{fullIReport.dateReported}}
+                {{fullIReport.dateReported | date}}
             </td>
         </tr>
     </table>
