@@ -6,7 +6,7 @@
 </head>
 <body>
 
-<div class="row">
+<div class="custom" >
 
     <button class="btn btn-default btn-lg" ng-click="makeReport()">Make A Report </button>
     <button class="btn btn-default btn-lg" ng-click="viewReports()">View Reports </button>
@@ -15,7 +15,7 @@
 <span></span>
 
 
-<div class="row" ng-show="makereportClasses">
+<div class="custom" ng-show="makereportClasses">
 
     <button class="btn btn-default btn-md" ng-click="showPersonreport()">Make A Person Report</button>
     <button class="btn btn-default btn-md" ng-click="showVehiclereport()">Make A Vehicle Report</button>
@@ -23,18 +23,18 @@
 
 </div>
 
-<div class="row" ng-show="viewreportClasses">
+<div class="custom" ng-show="viewreportClasses">
 
-    <button class="btn btn-default btn-sm" ng-click="viewPersonreports()">View Person Reports</button>
-    <button class="btn btn-default btn-sm" ng-click="viewVehiclereports()">View Vehicle Reports</button>
-    <button class="btn btn-default btn-sm" ng-click="viewIncidentreports()">View Incident Reports</button>
+    <button class="btn btn-default btn-md" ng-click="viewPersonreports()">View Person Reports</button>
+    <button class="btn btn-default btn-md" ng-click="viewVehiclereports()">View Vehicle Reports</button>
+    <button class="btn btn-default btn-md" ng-click="viewIncidentreports()">View Incident Reports</button>
 
 </div>
 
 
 <div class="form-group" ng-show="personReport">
 
-    <table class="table table-spacing">
+    <table width="450px"  >
         <tr>
             <td>
                 Name Of Suspect
@@ -308,7 +308,7 @@
 
 <div class="form-group" ng-show="vehicleReport">
 
-    <table class="table table-spacing">
+    <table width="450px" >
         <tr>
             <td class="required" style="width:180px">
                 Vehicle Type
@@ -500,7 +500,7 @@
     </div>
 
 <div class="form-group" ng-show="incidentReport">
-    <table class="table table-spacing">
+    <table width="450px" >
         <tr>
             <td>
                Date Of Incident
@@ -1085,7 +1085,14 @@
 
 <div class="form-group" ng-show="ocadDash">
 
-    <p>Welcome to the OCAD. Here, you can make reports of child abuse instances or</p>
+    <p1>Welcome to the Online Child Abuse Database. Here, you can make reports of child abuse instances or view/print existing reports. To view reports
+    with a correlation, we have built a complex Correlation Matrix  that analyzes data from all classes of reports
+    and builds a profile from existing reports. You can access this functionality from the left hand side.
+
+    Our mission is to investigate the root cause of child abuse and identify methods of prevention.
+        By creating awareness among the masses about the problems associated with abuse of children, numerous reports
+        are taken in detail, and by integrating these reports, we create reports based on
+        statistics and track suspicious events. </p1>
     </div>
 
 
