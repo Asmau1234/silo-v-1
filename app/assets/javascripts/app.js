@@ -1,5 +1,6 @@
 var emsApp = angular.module('emsApp', [
     'ngRoute',
+    'ng-fusioncharts',
     'ngResource',
     'ngStorage',
     'emsControllers',
@@ -25,57 +26,84 @@ emsApp.config(['$routeProvider', '$authProvider','$stateProvider','$urlRouterPro
                  .state('index', {
                  url: '/',
                  templateUrl: '/assets/partials/login.html',
-                 controller: 'LoginController'
+                 controller: 'LoginController',
+                 resolve: { skipIfLoggedIn: skipIfLoggedIn }
                   })
                   .state('login', {
                   url: '/login',
                   templateUrl: '/assets/partials/login.html',
-                  controller: 'LoginController'
+                  controller: 'LoginController',
+                  resolve: { skipIfLoggedIn: skipIfLoggedIn }
                   })
                   .state('home', {
                   url: '/home',
                   templateUrl: '/assets/partials/home.html',
-                  controller: 'IndexController'
+                  controller: 'IndexController',
+                  resolve: { loginRequired: loginRequired }
                   })
                   .state('home.map', {
                   url: '/map',
                   templateUrl: '/assets/partials/map.html',
-                  controller: 'MapController'
+                  controller: 'MapController',
+                  resolve: { loginRequired: loginRequired }
                   })
                   .state('home.ocad', {
                   url: '/ocad/home',
                   templateUrl: '/assets/partials/ocad/main.html',
-                  controller: 'OCADMainController'
+                  controller: 'OCADMainController',
+                  resolve: { loginRequired: loginRequired }
                   })
                   .state('home.about', {
                   url: '/about',
                   templateUrl: '/assets/partials/about.html',
-                  controller: 'AboutController'
+                  controller: 'AboutController',
+                  resolve: { loginRequired: loginRequired }
+                  })
+                  .state('home.correlation', {
+                  url: '/correlation',
+                  templateUrl: '/assets/partials/ocad/correlation-table.html',
+                  controller: 'CorrelationController',
+                  resolve: { loginRequired: loginRequired }
+                  })
+                  .state('home.contact', {
+                  url: '/contact/',
+                  templateUrl: '/assets/partials/contact.html',
+                  controller: 'ContactController',
+                  resolve: { loginRequired: loginRequired }
+                  }).
+                  state("logout", {
+                  url: "/logout",
+                  templateUrl: null,
+                  controller: "LogoutController"
                   });
-                 /* .state('home.pdetails', {
-                  url: '/view-preport-details/:id',
-                  templateUrl: '/assets/partials/ocad/reportdetails.html',
-                  controller: 'OCADMainController'
-                  })
-                  .state('home.idetails', {
-                  url: '/view-ireport-details/:id',
-                  templateUrl: '/assets/partials/ocad/reportdetails.html',
-                  controller: 'OCADMainController'
-                  })
-                  .state('home.vdetails', {
-                  url: '/view-vreport-details/:id',
-                  templateUrl: '/assets/partials/ocad/reportdetails.html',
-                  controller: 'OCADMainController'
-                  });*/
 
 $urlRouterProvider.otherwise('/');
 
 
 
 
+ function skipIfLoggedIn($q, $auth) {
+      var deferred = $q.defer();
+      if ($auth.isAuthenticated()) {
+        deferred.reject();
+      } else {
+        deferred.resolve();
+      }
+      return deferred.promise;
+    }
 
-                  }
-                  ]);
+    function loginRequired($q, $location, $auth) {
+      var deferred = $q.defer();
+      if ($auth.isAuthenticated()) {
+        deferred.resolve();
+      } else {
+        $location.path('/login');
+      }
+      return deferred.promise;
+    }
+
+}
+  ]);
 
                   emsApp.config(function(uiGmapGoogleMapApiProvider) {
                    uiGmapGoogleMapApiProvider.configure({

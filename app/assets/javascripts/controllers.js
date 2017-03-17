@@ -4,18 +4,76 @@ emsControllers.controller("IndexController",["$scope","$http", "$auth","$resourc
                           function($scope,$http, $auth, $resource, toastr){
 
                     $scope.title= "Hello World";
+                     $scope.myDataSource = {
+                            chart: {
+                                caption: "Emergency Response Application",
+                                subCaption: "Frequency Of Reports per Month",
+                                numberPrefix: ""
+                            },
+                            data: [{
+                                label: "Conflict Report",
+                                value: "880000"
+                            }, {
+                                label: "Person CA Report",
+                                value: "730000"
+                            }, {
+                                label: "Incident CA Report",
+                                value: "590000"
+                            }, {
+                                label: "Vehicle CA Report",
+                                value: "520000"
+                            }]
+                        };
 
 
 }]);
 
-emsControllers.controller("LoginController",["$scope","$http", "$auth","$resource","toastr","$state",
-                          function($scope,$http, $auth, $resource, toastr, $state){
+emsControllers.controller("LoginController",['$rootScope','$scope','$auth','$location',"$state","$http",'toastr',"$localStorage","$window",
+                          function($rootScope,$scope, $auth,$location,$state,$http,toastr,$localStorage, $window){
 
                     $scope.title= "Hello World";
-                    $scope.login=function(){
-                    $state.go('home');
+                    $scope.login = function(){
 
-                    };
+                       $auth.login($scope.user).then(function(response){
+                               var role = response.data.userType;
+                                console.log(response);
+                                $scope.$storage = $localStorage;
+                                $scope.$storage.userProfile = response.data.profile;
+
+                              $scope.isAuthenticated = function(){
+                                return $auth.isAuthenticated;
+
+                              };
+                               toastr.success('You have successfully signed in');
+                               if(role.accountType == "User"){
+                                   $location.path("/home");
+                                }else if(role.accountType == "Admin") {
+                                   $location.path("/location/home");
+                                }
+                                 else {
+                                      $location.path("/home");
+                                                           }
+
+                           }).catch(function(response){
+
+                                  toastr.error(response.data);
+
+                         });
+                       };
+
+                       $scope.signup=function(){
+                       var user= $scope.user;
+                       $http.post("/signup", {user:user}).success(function(res){
+                                 toastr.success("Signed Up!");
+                                 //$location.path("/home");
+
+
+                              }).error(function(e){
+                             toastr.error("Failure. Check Internet Connectivity!");
+                                                   });
+                                                 };
+
+
 
 
 }]);
@@ -23,7 +81,6 @@ emsControllers.controller("MapController",["$scope","$http", "$auth","$resource"
                     function($scope,$http, $auth, $resource, toastr, uiGmapGoogleMapApi){
 
                     $scope.severitys=[{name: "Emergency"}, {name: "Escalation"}, {name: "Engaging"}];
-                    $scope.map = { center: { latitude: 9, longitude: 8 }, zoom: 8 };
                     $scope.text="Please insert a location and the possible level of crisis in that location to populate the map below with only said locations data!";
                     $scope.booleans=[{name: "Yes"}, {name: "No"}];
                     $scope.makeConflictreport=false;
@@ -32,14 +89,11 @@ emsControllers.controller("MapController",["$scope","$http", "$auth","$resource"
                     $scope.lgaCrisis=false;
 
 
-
-
-
-
 //display menu item for adding conflict reports
                     $scope.addConflict=function(){
                     $scope.makeConflictreport=true;
                     $scope.viewConflictMap=false;
+
                     };
 
 //function that saves the form data of conflict report
@@ -127,22 +181,34 @@ emsControllers.controller("MapController",["$scope","$http", "$auth","$resource"
 //searches db for reports based on selected parameters.
 
 /*TO-DO: markers now displaying */
-                    $scope.markers=[];
-                    $scope.search=function(params){
-
-                    $http.get("/ocad/search-conflicts/" + params.state+"/"+ params.lga +"/"+ params.severity)
-                    .success(function(res){
+                    $scope.search=function(search){
+                    var data= {"state": search.state,
+                                "lga":search.lga,
+                                "severity":search.severity};
+                    $http.post("/ocad/search-conflicts", {data:data}).success(function(res){
                                 var markers = res;
-                                console.log(markers);
-                                     _.forEach(markers, function(marker) {
-                                       marker.coords = {
-                                         latitude: marker.latitude,
-                                         longitude: marker.longitude
-                                       };
-                                     });
-                                    $scope.markers = markers;
-                     });
+                                _.forEach(markers, function(marker) {
+                                         var m = {
+                                                  idKey: marker._id,
+                                                  icon: '/assets/images/icon.png',
+                                                  coords:{
+                                                  latitude: marker.latitude,
+                                                  longitude: marker.longitude
+                                                 }
+                                               };
+                                 $scope.map.markers.push(m);
+                                           });
+                    console.log($scope.map.markers);
+                                   // $scope.$apply();
+
+                     }).error(function (e){
+
+                      toastr.error("Oops.Network Error!") ;
+                      });
+
+                    $scope.map = { center: { latitude: 9, longitude: 8 }, zoom: 6, markers:[] };
                     };
+
 
                     $http.get("/states").success(function(response){
                      $scope.states=response;
@@ -177,7 +243,8 @@ emsControllers.controller("OCADMainController",["$scope","$http", "$auth","$reso
                     $scope.religions=[{name:"Christain"},{name:"Jew"},{name:"Muslim"}];
                     $scope.tribes=[{name:"Igbo"},{name:"Hausa"},{name:"Yoruba"},{name:"Other"}];
                     $scope.numberRange=[{name:"0-2"},{name:"3-5"},{name:"6-8"},{name:"9-10"},{name:"More"}];
-                    $scope.IncidentTypes=[{name:"Maltreatment Of Child/Children"},{name:"Rape Of Child/Children"}];
+                    $scope.seatTypes=[{name:"Leather"},{name:"Cotton"},{name:"Not Sure"}];
+                    $scope.IncidentTypes=[{name:"Child Trafficking"},{name:"Child Labour"},{name:"Sexual Exploitation Of Child/Children"}];
 
 
                     $scope.personReport=false;
@@ -459,6 +526,8 @@ emsControllers.controller("OCADMainController",["$scope","$http", "$auth","$reso
 
 
 
+
+
 }]);
 
 emsControllers.controller("ReportDetailsController",["$scope","$http", "$auth","$resource","toastr",
@@ -471,6 +540,67 @@ emsControllers.controller("ReportDetailsController",["$scope","$http", "$auth","
 
 }]);
 
+emsControllers.controller("CorrelationController",["$scope","$http", "$auth","$resource","toastr",
+                          function($scope,$http, $auth, $resource, toastr){
+
+                    $scope.title= "Hello World";
+                    //$scope.Report=Report;
+                    $scope.makeCorrelation=function(){
+
+                    $http.get("/correlation-matrix").success(function(response){
+
+                    $scope.person= response.person;
+                    $scope.vehicle=response.vehicle;
+                    $scope.incident=response.incident;
+
+                    var p= $scope.person;
+                    var v= $scope.vehicle;
+                    var inc= $scope.incident;
+                    $scope.newArray=[{}];
+                    angular.forEach($scope.person, function (value, key) {
+                            var nameOfSuspect = value.suspectProfile.nameOfSuspect;
+                            var genderOfSuspect = value.suspectProfile.genderOfSuspect;
+                            var addressOfSuspect = value.suspectProfile.contactAddress;
+                            var locationOfSuspect = value.lastplaceSeen;
+                            var psuspicionText = value.suspicionText;
+                    angular.forEach($scope.vehicle, function (value,key) {
+                            var nameOfOwner = value.nameofOwner;
+                            var genderOfOwner = value.genderofOwner;
+                            var addressOfOwner = value.addressofOwner;
+                            var locationOfOwner = value.lastlocationSeen;
+                            var vsuspicionText = value.suspicionText;
+                    angular.forEach($scope.incident, function (value,key) {
+                            var nameOfInc = value.nameOfSuspect;
+                            var genderOfInc = value.genderOfSuspect;
+                            var addressOfInc = value.addressofIncident;
+                            var locationOfInc = value.locationofIncident;
+                            var isuspicionText = value.suspicionText;
+                            if(nameOfSuspect === nameOfOwner && nameOfSuspect === nameOfInc){
+                                 if(genderOfSuspect === genderOfOwner && genderOfSuspect === genderOfInc){
+                                   if(addressOfSuspect === addressOfOwner && addressOfSuspect === addressOfInc){
+                                     if(locationOfSuspect === locationOfOwner && locationOfSuspect === locationOfInc){
+                                       if(psuspicionText === vsuspicionText && psuspicionText === isuspicionText){
+                                          $scope.newArray.push({"name": nameOfSuspect,
+                                                                "gender": genderOfSuspect,
+                                                                "address": addressOfSuspect,
+                                                                "location": locationOfSuspect,
+                                                                "suspicious": psuspicionText});
+                                                               }
+                                                              }
+                                                             }
+                            }
+                            }
+                            });
+                        });
+                     });
+
+                     });
+                    };
+
+
+
+}]);
+
 emsControllers.controller("AboutController",["$scope","$http", "$auth","$resource","toastr",
                           function($scope,$http, $auth, $resource, toastr){
 
@@ -478,3 +608,29 @@ emsControllers.controller("AboutController",["$scope","$http", "$auth","$resourc
 
 
 }]);
+
+emsControllers.controller("ContactController",["$scope","$http", "$auth","$resource","toastr",
+                          function($scope,$http, $auth, $resource, toastr){
+
+                    $scope.title= "Hello World";
+
+
+}]);
+
+emsControllers.controller('LogoutController', ["$location","$auth","toastr",'$localStorage',
+                                            function($location, $auth, toastr, $localStorage) {
+
+
+                        if (!$auth.isAuthenticated()) {
+                        return;
+                        }
+                        $auth.logout()
+                          .then(function() {
+
+                          console.log($localStorage);
+                          $localStorage.$reset();
+                          $location.path('/login');
+                          toastr.info('You have been logged out');
+
+                          });
+                      }]);

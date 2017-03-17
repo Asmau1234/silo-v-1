@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div class="custom">
+<button class="btn btn-default btn-lg" ng-click="makeCorrelation()">Build Correlation Matrix </button>
+</div>
+<div class="form-group">
+<table class="table table-spacing">
+    <thead>
+    <tr>
+        <th>S/N</th>
+        <th>Name Of Suspect</th>
+        <th>Gender Of Suspect</th>
+        <th>Address Of Suspect</th>
+        <th>Location Of Suspect</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="correlation in newArray">
+        <td>{{$index + 1}}</td>
+        <td>{{correlation.name}}</td>
+        <td>{{correlation.gender}}</td>
+        <td>{{correlation.address}}</td>
+        <td>{{correlation.location}}</td>
+    </tr>
+    </tbody>
+</table>
+</div>
+</body>
+</html>

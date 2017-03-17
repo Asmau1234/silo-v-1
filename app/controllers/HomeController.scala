@@ -36,14 +36,5 @@ class HomeController @Inject() extends Controller {
       NotFound
   }
 
-  def search(params: String)= Action{
-
-    Ok("Here you go!")
-  }
-
-  def map=Action{
-
-    Ok("here")
-  }
 
 }

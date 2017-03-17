@@ -3,16 +3,18 @@
 # ~~~~
 
 # An example controller showing a sample home page
-GET     /                           controllers.HomeController.index(any="None")
-GET    /login                       controllers.LoginController.login
+GET     /                                       controllers.HomeController.index(any="None")
+POST   /auth/login                              controllers.Application.login
+POST   /signup                                  controllers.Application.signup
+
 
 
 GET    /partials/*any                           controllers.HomeController.loadPublicHTML(any)
-GET    /search/:params                          controllers.HomeController.search(params: String)
-GET    /map                                     controllers.HomeController.map
 
 GET    /states                                  controllers.MapController.getStates
 GET    /lga/:state                              controllers.MapController.getLga(state: String)
+POST   /ocad/make-conflict-report               controllers.MapController.makeConflictreport
+POST   /ocad/search-conflicts                   controllers.MapController.searchConflicts
 
 GET    /ocad/home                               controllers.OCADController.index
 GET    /vehicles                                controllers.OCADController.getVehicles
@@ -32,10 +34,10 @@ GET    /show-person-report                      controllers.OCADController.viewP
 GET    /show-vehicle-report                     controllers.OCADController.viewVehiclereport
 GET    /show-incident-report                    controllers.OCADController.viewIncidentreport
 
-POST   /ocad/make-conflict-report               controllers.MapController.makeConflictreport
-GET    /ocad/search-conflicts/:state/:lga/:severity     controllers.MapController.searchConflicts(state:String,lga:String,severity:String)
 
 
+GET   /correlation                              controllers.CorrelationController.index
+GET   /correlation-matrix                       controllers.CorrelationController.make
 
 
 

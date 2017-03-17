@@ -28,7 +28,7 @@ libraryDependencies ++= Seq(
   "org.webjars.bower" % "angular-loading-bar" % "0.8.0",
   "org.webjars" % "angular-bootstrap-datetimepicker" % "0.3.8",
   "org.webjars" % "momentjs" % "2.12.0",
-  "com.pauldijou" %% "jwt-play" % "0.4.1",
+  "com.pauldijou" %% "jwt-play" % "0.7.0",
   "com.github.nscala-time" %% "nscala-time" % "2.4.0",
   "org.mindrot" % "jbcrypt" % "0.3m",
   "org.webjars.bower" % "ngstorage" % "0.3.11"
@@ -38,3 +38,4 @@ libraryDependencies += "com.google.maps" % "google-maps-services" % "0.1.6"
 libraryDependencies += "org.reactivemongo" %% "play2-reactivemongo" % "0.11.14"
 
 routesGenerator := InjectedRoutesGenerator
+

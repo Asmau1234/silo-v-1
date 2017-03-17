@@ -130,4 +130,23 @@ object PersonReportDAO {
     personreport.db.command(agg)
   }
 
+  def correlationData={
+
+    import helpers.Implicits._
+
+    val agg = Aggregate(personreport.name,
+      Seq(Project("_id" -> 1,
+        "suspectProfile.nameOfSuspect" -> 1,
+        "suspectProfile.genderOfSuspect" -> 1,
+        "suspectProfile.contactAddress" -> 1,
+        "lastplaceSeen" -> 1,
+        "suspicionText" -> 1,
+        "ageOfVictim" -> 1,
+        "genderOfVictim" -> 1
+      )))
+
+    personreport.db.command(agg)
+
+  }
+
 }

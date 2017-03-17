@@ -25,8 +25,15 @@ case class ConflictReport (
                       reportedBy: Option[String]
                      )
 
+case class SearchConflict(
+                         state:Option[String],
+                         lga: Option[String],
+                         severity:Option[String]
+
+                         )
 object ConflictReport{
 
+  implicit val searchconf4json=Json.format[SearchConflict]
   implicit val map4json=Json.format[ConflictReport]
 }
 

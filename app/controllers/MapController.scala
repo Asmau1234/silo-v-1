@@ -4,6 +4,7 @@ import javax.inject.Inject
 
 import models._
 import models.States._
+import models.ConflictReport._
 import play.api.Play._
 import play.api.mvc.{Controller, Action}
 import play.modules.reactivemongo.json.collection._
@@ -56,6 +57,7 @@ class MapController @Inject()(val reactiveMongoApi: ReactiveMongoApi) extends Co
     }
   }
 
+
   def makeConflictreport= Action.async(parse.json){ implicit request=>
 
     val conflictReport= (request.body\"reportDets")
@@ -65,9 +67,78 @@ class MapController @Inject()(val reactiveMongoApi: ReactiveMongoApi) extends Co
     Future.successful(Ok(Json.toJson(Map("error"-> "Some error occured"))))
   }
 
-  def searchConflicts(state:String,lga:String,severity:String)= Action.async{
+  def searchConflicts = Action.async(parse.json){ request =>
 
-    val query=document("stateOfCrisis"->state, "lgaOfCrisis" ->lga, "levelOfCrisis"->severity)
+    val search = (request.body \ "data" ).as[SearchConflict]
+
+    println(search)
+    search match {
+
+      case SearchConflict(Some(state), Some(lga),Some(severity)) =>
+        val state = search.state.getOrElse(None).toString
+        val lga = search.lga.getOrElse(None).toString
+        val severity = search.severity.getOrElse(None).toString
+        val query = document("stateOfCrisis" -> state, "lgaOfCrisis" -> lga, "levelOfCrisis" -> severity)
+        ConflictReportDAO.getLatLang(query).map{x =>
+          Ok(Json.toJson(x))
+
+        }
+
+      case SearchConflict(Some(state),_, Some(severity))=>
+        val state = search.state.getOrElse(None).toString
+        val severity = search.severity.getOrElse(None).toString
+        val query=document("stateOfCrisis"->state, "levelOfCrisis"->severity)
+        ConflictReportDAO.getLatLang(query).map{x =>
+          Ok(Json.toJson(x))
+
+        }
+
+      case SearchConflict(_,_, Some(severity))=>
+        val severity = search.severity.getOrElse(None).toString
+        val query=document("levelOfCrisis"->severity)
+        ConflictReportDAO.getLatLang(query).map{x =>
+          Ok(Json.toJson(x))
+
+        }
+
+      case SearchConflict(Some(state),_,_)=>
+        val state = search.state.getOrElse(None).toString
+        val query=document("stateOfCrisis"->state)
+        ConflictReportDAO.getLatLang(query).map{x =>
+          Ok(Json.toJson(x))
+
+        }
+
+      case SearchConflict(Some(state),Some(lga),_)=>
+        val state = search.state.getOrElse(None).toString
+        val lga = search.lga.getOrElse(None).toString
+        val query=document("stateOfCrisis"->state, "lgaOfCrisis"->lga)
+        ConflictReportDAO.getLatLang(query).map{x =>
+          Ok(Json.toJson(x))
+
+        }
+
+
+
+    }
+
+
+
+  }
+
+  def onlyState(state:String,severity:String)= Action.async{
+
+    val query=document("stateOfCrisis"->state, "levelOfCrisis"->severity)
+
+    ConflictReportDAO.getLatLang(query).map{x =>
+      Ok(Json.toJson(x))
+
+    }
+  }
+
+  def onlySeverity(severity:String)= Action.async{
+
+    val query=document( "levelOfCrisis"->severity)
 
     ConflictReportDAO.getLatLang(query).map{x =>
       Ok(Json.toJson(x))

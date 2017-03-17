@@ -25,6 +25,7 @@ case class IncidentReport(
                          locationofIncident:Option[String],
                          addressofIncident:Option[String],
                          nameOfSuspect:Option[String],
+                         genderOfSuspect:Option[String],
                          typeOfIncident:Option[String],
                          noofPeopleInvolved:Option[String],
                          ageofVictim:Option[String],
@@ -68,6 +69,7 @@ object IncidentReportDAO {
           "locationofIncident"->1,
           "addressofIncident"->1,
           "nameOfSuspect"->1,
+          "genderOfSuspect"->1,
           "typeOfIncident"->1,
           "noofPeopleInvolved"->1,
           "ageofVictim"->1,
@@ -99,11 +101,30 @@ object IncidentReportDAO {
         "timeOfIncident" -> 1,
         "locationofIncident"->1,
         "typeOfIncident" -> 1,
-        "genderOfvictim" -> 1,
+        "genderofvictim" -> 1,
         "suspicionText" -> 1,
         "dateReported"->1
       )))
 
     incidentreport.db.command(agg)
+  }
+
+  def correlationData={
+
+    import helpers.Implicits._
+
+    val agg = Aggregate(incidentreport.name,
+      Seq(Project("_id" -> 1,
+        "locationofIncident" -> 1,
+        "addressofIncident" -> 1,
+        "nameOfSuspect" -> 1,
+        "genderOfSuspect" -> 1,
+        "suspicionText" -> 1,
+        "ageofVictim" -> 1,
+        "genderofVictim" -> 1
+      )))
+
+    incidentreport.db.command(agg)
+
   }
 }
