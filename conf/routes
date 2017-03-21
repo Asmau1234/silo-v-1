@@ -19,6 +19,8 @@ POST   /ocad/search-conflicts                   controllers.MapController.search
 GET    /ocad/home                               controllers.OCADController.index
 GET    /vehicles                                controllers.OCADController.getVehicles
 GET    /make/:vehicle                           controllers.OCADController.getVehiclemakes(vehicle:String)
+GET    /colors                                  controllers.OCADController.getColors
+
 
 POST   /ocad/make-person-report                 controllers.OCADController.makePersonreport
 POST   /ocad/make-vehicle-report                controllers.OCADController.makeVehiclereport

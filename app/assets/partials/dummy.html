@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+    <title>Table Printing Demo</title>
+
+    <style type="text/css" media="print">
+        body {
+        font-family: verdana, arial, sans-serif ;
+        font-size: 12px ;
+        background: blue;
+        }
+        th,
+        td {
+        padding: 4px 4px 4px 4px ;
+        text-align: center ;
+        }
+        th {
+        border-bottom: 2px solid #333333 ;
+        }
+        td {
+        border-bottom: 1px dotted #999999 ;
+        }
+        tfoot td {
+        border-bottom-width: 0px ;
+        border-top: 2px solid #333333 ;
+        padding-top: 20px ;
+        }
+    </style>
+
+</head>
+<body>
+
+
+    <h1>
+        Table Print Demonstration
+    </h1>
+
+    <p>
+        This demonstrates how to properly define an HTML table
+        in such a way that it will display the table header on
+        each of the printed pages.
+    </p>
+
+
+    <table
+            cellspacing="0"
+            summary="This is a really long table that is used to demonstrate the print of headers across several pages.">
+
+        <!---
+            Define the HEAD of the table. This is the data that
+            will be displayed at the top of every printed page.
+        --->
+        <thead>
+        <tr>
+            <th>
+                ID
+            </th>
+            <th>
+                Value
+            </th>
+        </tr>
+        </thead>
+
+        <!---
+            Defint eh FOOTER of the table. This is the data that
+            will be displayed at the bottom of every printed page.
+        --->
+        <tfoot>
+        <tr>
+            <td colspan="2">
+                Kinky Solutions Table Demo
+            </td>
+        </tr>
+        </tfoot>
+
+        <!--- Define the BODY of the table. This is the data. --->
+        <tbody>
+
+        <!---
+            Let's now create a ton or rows that will require
+            several pages to fully print.
+        --->
+                index="intRow"
+                from="1"
+                to="100"
+                step="1">
+
+            <tr>
+                <td>
+                    #intRow#
+                </td>
+                <td>
+                    #RandRange( 111111, 999999 )#
+                </td>
+            </tr>
+
+
+        </tbody>
+    </table>
+
+
+</body>
+</html>

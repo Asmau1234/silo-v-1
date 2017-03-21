@@ -15,10 +15,6 @@ h2 {
     margin-bottom:0;
     margin-top: 0;
 }
-
-body {
-    background-color: white;
-}
 h1 {
     color: blue;
     font-family: verdana;
@@ -34,6 +30,9 @@ p1  {
 
 }
 
+.wrapper {
+    text-align: right;
+}
 div.form-group {
     position: relative;
     left: 30px;
@@ -49,8 +48,67 @@ position: relative;
 @media (max-width: 768px) {
     .btn,.btn-group {
         width:100%;
+
     }
 }
+
+/*@media print{
+  body
+  {
+      font-size: 10pt;
+      color: black;
+      font-family: Arial;
+      background-color: blue
+  }
+
+ btn{
+    display: none;
+    }
+
+  header:before {
+  display: block;
+  content: "Thank you for printing SILO data.";
+  margin-bottom: 10px;
+  border: 1px solid #bbb;
+  padding: 3px 5px;
+  font-style: italic;
+  }
+  .navStuff
+  {
+      DISPLAY: none
+  }
+  a:after
+  {
+  	content:' [' attr(href) '] '
+  }
+
+  th, td {
+              padding: 4px 4px 4px 4px ;
+              text-align: center ;
+              }
+          th {
+              border-bottom: 2px solid #333333 ;
+              font-style: bold;
+
+              }
+          td {
+              border-bottom: 1px dotted #999999 ;
+              }
+          tfoot td {
+              border-bottom-width: 0px ;
+              border-top: 2px solid #333333 ;
+              padding-top: 20px ;
+              }
+
+
+  @page         { margin: 10% }
+    blockquote,
+    pre           { page-break-inside: avoid }
+
+
+
+}*/
+
 
 
 /*tr:hover {

@@ -1,9 +1,42 @@
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
     <title>{{title}}</title>
+
+    <style type="text/css" media="print">
+        body {
+        background: babypink !important;
+        }
+
+        .btn{
+
+        display: none ;
+        }
+
+        header.onlyprint {
+        display: block;
+        content: "Thank you for printing SILO data." !important;
+        margin-bottom: 10px;
+        border: 1px solid #bbb;
+        padding: 3px 5px;
+        font-style: italic;
+        }
+
+        .table{
+
+        }
+
+        #sidebar , image{ display: none;}
+
+        h3{
+        text-align: center;
+        }
+    </style>
+
 </head>
+
+
+
 <body>
 
 <div class="custom" >
@@ -222,8 +255,13 @@
                 Hair Color Of Suspect
             </td>
             <td>
-                <input class="form-control" ng-model="personreport.suspectProfile.hairColor" class= "color" type="color">
+                <select class="form-control" data-width="100%" ng-model="personreport.suspectProfile.hairColor"
+                        ng-options="color.name as color.name for color in colors "
+                        placeholder="---">
 
+                    <option value=""> --</option>
+
+                </select>
             </td>
         </tr>
         <tr>
@@ -231,8 +269,13 @@
                 Eye Color Of Suspect
             </td>
             <td>
-                <input class="form-control" ng-model="personreport.suspectProfile.eyeColor" class= "color" type="color">
+                <select class="form-control" data-width="100%" ng-model="personreport.suspectProfile.eyeColor"
+                        ng-options="color.name as color.name for color in colors "
+                        placeholder="---">
 
+                    <option value=""> --</option>
+
+                </select>
             </td>
         </tr>
         <tr>
@@ -342,8 +385,13 @@
                 Vehicle Color
             </td>
             <td>
-                <input class="form-control" type="color" ng-model="vehiclereport.vehilceColor">
-            </td>
+                <select class="form-control" data-width="100%" ng-model="vehiclereport.vehicleColor "
+                        ng-options="color.name as color.name for color in colors "
+                        placeholder="---">
+
+                    <option value=""> --</option>
+
+                </select>                </td>
         </tr>
         <tr>
             <td class="required">
@@ -377,8 +425,13 @@
                 Color Of Seats
             </td>
             <td>
-                <input class="form-control" type="color" ng-model="vehiclereport.colorofSeats">
-            </td>
+                <select class="form-control" data-width="100%" ng-model="vehiclereport.colorofSeats "
+                        ng-options="color.name as color.name for color in colors "
+                        placeholder="---">
+
+                    <option value=""> --</option>
+
+                </select>              </td>
         </tr>
         <tr>
             <td>
@@ -708,9 +761,10 @@
     </div>
 
 <div class="table-responsive" ng-show="person">
-<span></span>
-    <h3>{{fullPReport.typeOfReport}}</h3>
-<span></span>
+    <h3>{{fullPReport.typeOfReport}}</h3>  <div class="wrapper">
+    <button type="button" ng-hide="print" ng-click="printPage()" class="btn blue no-print">Print</button>
+</div>
+    <span></span>
 
     <table class="table table-spacing">
         <tr>
@@ -892,6 +946,9 @@
 <div class="table-reponsive" ng-show="vehicle">
     <span></span>
     <h3>{{fullVReport.typeOfReport}}</h3>
+    <div class="wrapper">
+        <button type="button" ng-hide="print" ng-click="printPage()" class="btn blue no-print">Print</button>
+    </div>
     <span></span>
     <table class="table table-spacing">
         <tr>
@@ -991,7 +1048,10 @@
 
 <div class="table-responsive" ng-show="incident">
     <span></span>
-    <h3>{{fullVReport.typeOfReport}}</h3>
+    <h3>{{fullIReport.typeOfReport}}</h3>
+    <div class="wrapper">
+        <button type="button" ng-hide="print" ng-click="printPage()" class="btn blue no-print">Print</button>
+    </div>
     <span></span>
     <table class="table table-spacing">
         <tr>
@@ -1030,7 +1090,7 @@
                 {{fullIReport.addressofIncident}}
             </td>
             <td>
-                Name Of Ssupect Involved In Incident
+                Name Of Suspect Involved In Incident
             </td>
             <td>
                 {{fullIReport.nameOfSuspect}}

@@ -13,6 +13,9 @@ import reactivemongo.core.commands.{Match, Project, Aggregate}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import play.modules.reactivemongo.json._
+
+import scala.util.Try
+
 /**
   * Created by Asmau Muktar on 3/1/2017.
   */
@@ -67,19 +70,34 @@ object VehicleReportDAO {
 
   def add(newvehicleReport:VehicleReport)={
 
+    import helpers.ColorUtils
+
     val date= now
     val r = scala.util.Random
-    val id= r.nextInt()/*
-    val getcolor = newvehicleReport.vehicleColor
-    val colorName = Color.decode(getcolor.toString)
-    val seatcolor= newvehicleReport.colorofSeats
-    val seatcol=Color.decode(seatcolor.toString)
-    println(colorName + "" + seatcol)*/
+    val id= r.nextInt()
+
+/*
+    //get color hex to convert to string using helper ColorUtils class
+    val getVcolor = newvehicleReport.vehicleColor.toString()
+    val getScolor = newvehicleReport.colorofSeats.toString()
+
+
+    //convert string to Int
+    val hexVehicleColor= Integer.parseInt(getVcolor.replaceFirst("#", ""), 16)
+    val hexSeatColor= Integer.parseInt(getScolor.replaceFirst("#", ""), 16)
+
+    println(hexVehicleColor)
+
+
+    //intialize ColorUtils class
+    val colorString= new ColorUtils
+    val vehiclecolorString= colorString.getColorNameFromHex(hexVehicleColor)
+    val seatcolorString= colorString.getColorNameFromHex(hexSeatColor)
+*/
+
     val dbnewReport = newvehicleReport.copy(_id= Some(id),typeOfReport= Some("Vehicle Report"),
                                             dateReported = Some(date), reportedBy= Some("Admin"))
-/*
-                                            vehicleColor = Some(colorName.toString),colorofSeats =  Some(seatcol.toString))
-*/
+
 
     vehiclereport.insert(dbnewReport)
   }

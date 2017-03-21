@@ -206,7 +206,7 @@ emsControllers.controller("MapController",["$scope","$http", "$auth","$resource"
                       toastr.error("Oops.Network Error!") ;
                       });
 
-                    $scope.map = { center: { latitude: 9, longitude: 8 }, zoom: 6, markers:[] };
+             $scope.map = { center: { latitude: 9, longitude: 8 }, zoom: 6, markers:[] };
                     };
 
 
@@ -265,7 +265,7 @@ emsControllers.controller("OCADMainController",["$scope","$http", "$auth","$reso
                    // console.log(response);
                     }).error(function (e){
 
-                    toastr.error("Oops.Network Error!");
+                    toastr.error("Oops.Network Error, could not load list of Vehicles!");
                     });
 
                     $scope.getMakes = function(vehicle){
@@ -277,12 +277,20 @@ emsControllers.controller("OCADMainController",["$scope","$http", "$auth","$reso
                   }
                  };
 
+                 $http.get("/colors").success(function(response){
+
+                 $scope.colors= response;
+                 }).error(function (e){
+
+                   toastr.error("Oops.Network Error, could not load list of Colors!");
+                 });
+
                     $scope.personreport={};
                     $scope.submitPersonreport=function(){
                      var reportDets= $scope.personreport;
                      $http.post("/ocad/make-person-report", reportDets).success(function(res){
                                           toastr.success("Your Report Has Been Submitted!");
-                                              $scope.personreport = null;
+                                           $scope.personreport = null;
 
                                           }).error(function(e){
                                           toastr.error("Please re-check your input fields and try again.");
@@ -524,6 +532,12 @@ emsControllers.controller("OCADMainController",["$scope","$http", "$auth","$reso
 
                     };
 
+                    $scope.printPage= function(){
+                    $scope.in= false;
+                    window.print();
+
+                     };
+
 
 
 
@@ -557,6 +571,7 @@ emsControllers.controller("CorrelationController",["$scope","$http", "$auth","$r
                     var v= $scope.vehicle;
                     var inc= $scope.incident;
                     $scope.newArray=[{}];
+
                     angular.forEach($scope.person, function (value, key) {
                             var nameOfSuspect = value.suspectProfile.nameOfSuspect;
                             var genderOfSuspect = value.suspectProfile.genderOfSuspect;

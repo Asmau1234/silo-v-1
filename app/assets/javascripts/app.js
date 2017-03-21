@@ -77,7 +77,7 @@ emsApp.config(['$routeProvider', '$authProvider','$stateProvider','$urlRouterPro
                   controller: "LogoutController"
                   });
 
-$urlRouterProvider.otherwise('/');
+$urlRouterProvider.otherwise('/login');
 
 
 

@@ -3,6 +3,7 @@ package controllers
 
 import models.Vehicle._
 import models._
+import models.Color._
 import models.PersonReportDAO
 import play.api.mvc.{Controller, Action}
 import play.modules.reactivemongo.json.collection._
@@ -26,6 +27,8 @@ class OCADController @Inject()(val reactiveMongoApi: ReactiveMongoApi) extends C
   with MongoController {
 
   def vehicles=reactiveMongoApi.db.collection[JSONCollection]("vehicles")
+  def colors=reactiveMongoApi.db.collection[JSONCollection]("colors")
+
 
 
   def index=Action{
@@ -36,6 +39,14 @@ class OCADController @Inject()(val reactiveMongoApi: ReactiveMongoApi) extends C
   def getVehicles = Action.async {
 
     vehicles.find(Json.obj()).cursor[Vehicle].collect[List]().map{x =>
+      Ok(Json.toJson(x))
+    }
+
+  }
+
+  def getColors = Action.async {
+
+    colors.find(Json.obj()).cursor[Color].collect[List]().map{x =>
       Ok(Json.toJson(x))
     }
 
